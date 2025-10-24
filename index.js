@@ -22,7 +22,8 @@ if (pagePromise) {
     console.log('Headers:', pagePromise.headers());
 
     // Get job by div id, select
-    const jobTitleId = jobDivIds['delivery-jobs'].jobTitleId
+    const job = 'delivery-jobs'
+    const jobTitleId = jobDivIds[job].jobTitleId
     await page.waitForSelector(jobTitleId);
     await page.$(jobTitleId).then(el => el.click());
 
@@ -31,17 +32,39 @@ if (pagePromise) {
     await page.$('#WDB0').then(el => el.click());
 
     // Look for results
-    await page.waitForSelector('#WDEB')
-    const searchResult = await page.$eval('#WDEB', el => el.textContent.trim());
-    const spanContent = searchResult.split(':')[1].trim()
-    const hits = parseInt(spanContent.split(' ')[0])
-    
-    // Handle hit results
-    if(hits > 0 ) {
-        console.log('There are jobs!!')
-    } else {
-        console.log('There are no jobs :(')
+    try {
+        const jobResultId = jobDivIds[job].jobResultId
+        await page.waitForSelector(jobResultId);
+        const searchResult = await page.$eval(jobResultId, el => el.textContent.trim());
+        const spanContent = searchResult.split(':')[1].trim();
+        const hits = parseInt(spanContent.split(' ')[0]);
+
+        // Handle hit results
+        if (hits > 0) {
+            console.log(`There are jobs!! Result: ${hits}`);
+        } else {
+            console.log('There are no jobs :(');
+        }
+    } catch {
+        console.error('Error getting result header for parsing')
     }
+    
+    try {
+        // Handle parsing table to object
+        
+        const jobTableClass = '.urST3BdBrd.urST3Bd.urFontStd'
+        await page.waitForSelector(jobTableClass)
+        const table = await page.$(jobTableClass);
+
+        if(table) {
+            console.log("Table exists!!")
+            const tableHTML = await page.evaluate(el => el.outerHTML, table)
+            console.log(tableHTML)
+        }
+    } catch {
+        console.error('Issues parsing table html')
+    }
+    console.log('End of process')
 
 } else {
     console.log('Page failed to load');
