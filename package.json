@@ -1,0 +1,16 @@
+{
+  "name": "usps-job-fetcher",
+  "version": "1.0.0",
+  "description": "Fetches IT jobs using puppeteer",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "IsaacJrTypes",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^24.26.1"
+  }
+}
