@@ -29,6 +29,19 @@ if (pagePromise) {
     await page.waitForSelector('#WDB0');
     await page.$('#WDB0').then(el => el.click());
 
+    // Look for results
+    await page.waitForSelector('#WDEB')
+    const searchResult = await page.$eval('#WDEB', el => el.textContent.trim());
+    const spanContent = searchResult.split(':')[1].trim()
+    const hits = parseInt(spanContent.split(' ')[0])
+    
+    // Handle hit results
+    if(hits > 0 ) {
+        console.log('There are jobs!!')
+    } else {
+        console.log('There are no jobs :(')
+    }
+
 } else {
     console.log('Page failed to load');
 }
