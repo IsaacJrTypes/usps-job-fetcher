@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import { jobPortalURL } from './constants.js';
+import { jobPortalURL,jobDivIds } from './constants.js';
 
 
 // Launch the browser and open a new blank page.
@@ -22,8 +22,9 @@ if (pagePromise) {
     console.log('Headers:', pagePromise.headers());
 
     // Get job by div id, select
-    await page.waitForSelector('#WD9C');
-    await page.$('#WD9C').then(el => el.click());
+    const jobTitleId = jobDivIds['delivery-jobs'].jobTitleId
+    await page.waitForSelector(jobTitleId);
+    await page.$(jobTitleId).then(el => el.click());
 
     // Search jobs
     await page.waitForSelector('#WDB0');
