@@ -1,0 +1,131 @@
+{
+  "headers": [
+    "Job Posting",
+    "Functional Area",
+    "Published",
+    "Match"
+  ],
+  "jobs": [
+    {
+      "title": "RURAL CARR ASSOC/SRV REG RTE - WINDHAM ME NC12132391",
+      "id": "WINDHAM ME NC12132391",
+      "link": "WD0101",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    },
+    {
+      "title": "RURAL CARR ASSOC/SRV REG RTE - ELIZABETHTOWN IN NC12132390",
+      "id": "ELIZABETHTOWN IN NC12132390",
+      "link": "WD010C",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    },
+    {
+      "title": "POSTMASTER RELIEF (PTPO)- 6 HR  - 55 NEIHART MT NC12132389",
+      "id": "POSTMASTER RELIEF (PTPO)- 6 HR  - 55 NEIHART MT NC12132389",
+      "link": "WD0117",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    },
+    {
+      "title": "RURAL CARR ASSOC/SRV REG RTE - SCANDIA MN NC12132388",
+      "id": "SCANDIA MN NC12132388",
+      "link": "WD0122",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    },
+    {
+      "title": "RURAL CARR ASSOC/SRV REG RTE - NEW LEBANON NY NC12132387",
+      "id": "NEW LEBANON NY NC12132387",
+      "link": "WD012D",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    },
+    {
+      "title": "RURAL CARR ASSOC/SRV REG RTE - MOUNT OLIVE IL NC12132386",
+      "id": "MOUNT OLIVE IL NC12132386",
+      "link": "WD0138",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    },
+    {
+      "title": "RURAL CARR ASSOC/SRV REG RTE - SPRINGVALE ME NC12132385",
+      "id": "SPRINGVALE ME NC12132385",
+      "link": "WD0143",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    },
+    {
+      "title": "POSTMASTER RELIEF (RMPO)- 2 HR  - 51 MCADOO TX NC12132383",
+      "id": "POSTMASTER RELIEF (RMPO)- 2 HR  - 51 MCADOO TX NC12132383",
+      "link": "WD014E",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    },
+    {
+      "title": "RURAL CARR ASSOC/SRV REG RTE - CENTER VALLEY PA NC12132382",
+      "id": "CENTER VALLEY PA NC12132382",
+      "link": "WD0159",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    },
+    {
+      "title": "ASSISTANT RURAL CARRIER (ARC) - SALEM MO NC12132381",
+      "id": "SALEM MO NC12132381",
+      "link": "WD0164",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    },
+    {
+      "title": "RURAL CARR ASSOC/SRV REG RTE - BIG ISLAND VA NC12132374",
+      "id": "BIG ISLAND VA NC12132374",
+      "link": "WD016F",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    },
+    {
+      "title": "ASSISTANT RURAL CARRIER (ARC) - LEITCHFIELD KY NC12132373",
+      "id": "LEITCHFIELD KY NC12132373",
+      "link": "WD017A",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    },
+    {
+      "title": "RURAL CARR ASSOC/SRV REG RTE - YONCALLA OR NC12132372",
+      "id": "YONCALLA OR NC12132372",
+      "link": "WD0185",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    },
+    {
+      "title": "RURAL CARR ASSOC/SRV REG RTE - LA GRANGE KY NC12132371",
+      "id": "LA GRANGE KY NC12132371",
+      "link": "WD0190",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    },
+    {
+      "title": "ASSISTANT RURAL CARRIER (ARC) - WINDHAM ME NC12132369",
+      "id": "WINDHAM ME NC12132369",
+      "link": "WD019B",
+      "department": "Delivery/Customer Service",
+      "publishDate": "10/23/2025",
+      "match": "100.00"
+    }
+  ],
+  "totalRows": 15
+}
