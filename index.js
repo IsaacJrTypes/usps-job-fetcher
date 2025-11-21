@@ -103,11 +103,15 @@ if (pagePromise) {
             console.log(tableList);
 
             // Create job labels using index
-            const labelObj = {};
-            const labels = tableHeaders.forEach((val, i) => {
-                const title = val;
-                labelObj[i] = title;
-            });
+            const labelObj = () => {
+                const obj = {}
+                const labels = tableHeaders.forEach((val, i) => {
+                    const title = val;
+                    obj[i] = title;
+                });
+                return labels
+            };
+            
 
             // console.log("Labels", JSON.stringify(labels));
 
