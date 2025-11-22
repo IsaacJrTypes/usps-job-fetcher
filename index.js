@@ -111,43 +111,57 @@ if (pagePromise) {
 
             // Create list of structured job posting
             const structureJobPosts = async (tableHeaders,tableList) => {
-                let linkIndex = 0; // linkListing contains all valid job link nodes
-                const structuredJobList = [];
-                console.log('Table list: ', tableList)
-                for (let i = 0; i < tableList.length - 1; i+= 4) {
-                    const dataEntry = tableList;
+                try {
+                    let linkIndex = 0; // linkListing contains all valid job link nodes
+                    const structuredJobList = [];
+                    console.log('Table list: ', tableList);
+                    for (let i = 0; i < tableList.length - 1; i += 4) {
+                        const dataEntry = tableList;
 
-                    console.log('DataEntry: ', dataEntry)
-                    const stringEntry = dataEntry[i + 1]
-                    if (dataEntry[i] === '' && stringEntry.length !== 0) {
-                        console.log('Loop Entry: ',dataEntry)
-                        // Get ordered data columns, then add to index
-                        
-                        // const extractLinkPageURL = async () => {
-                        //     const linkId =  linkListings[linkIndex].linkNode.getAttribute('id')
+                        console.log('DataEntry: ', dataEntry);
+                        const stringEntry = dataEntry[i + 1];
+                        if (dataEntry[i] === '' && stringEntry.length !== 0) {
+                            console.log('Loop Entry: ', dataEntry);
+                            // Get ordered data columns, then add to index
 
-                        //     await page.click(`#${linkId}`);
+                            // const extractLinkPageURL = async () => {
+                            //     const linkId =  linkListings[linkIndex].linkNode.getAttribute('id')
 
-                        //     await page.waitForSelector(jobDivIds[job].jobTableId)
+                            //     await page.click(`#${linkId}`);
 
-                        // }
-                        //  await extractLinkPageURL()
-                        //console.log('hRef: ', await extractLinkPageURL())
-                        
-                        const structuredRow = {
-                            [tableHeaders[0]]: dataEntry[i + 1], // job
-                            [tableHeaders[1]]: dataEntry[i + 2], // type
-                            [tableHeaders[2]]: dataEntry[i + 3], // PostDate
-                           // [[labelObj[3]]]: jobEntries[i + 4] // Match
-                        };
+                            //     await page.waitForSelector(jobDivIds[job].jobTableId)
 
-                        structuredJobList.push(structuredRow);
-                        console.log(structuredJobList)
+                            // }
+                            //  await extractLinkPageURL()
+                            //console.log('hRef: ', await extractLinkPageURL())
+
+                            const structuredRow = {
+                                [tableHeaders[0]]: dataEntry[i + 1], // job
+                                [tableHeaders[1]]: dataEntry[i + 2], // type
+                                [tableHeaders[2]]: dataEntry[i + 3], // PostDate
+                                // [[labelObj[3]]]: jobEntries[i + 4] // Match
+                            };
+
+                            structuredJobList.push(structuredRow);
+                            console.log(structuredJobList);
+                        }
                     }
+                    return structuredJobList;
+                } catch(e) {
+                    console.error('Structure job post algorithm error: ',e)
+                } finally { // Kill browser
+                    await browser.close();
                 }
-                return structuredJobList;
+                
             };
-        
+            const metaDataProducer = async (tableHeaders, tableList) => {
+                const data = await structureJobPosts(tableHeaders, tableList);
+                if(!data) {
+                    return []
+                }
+                return table.list
+            } 
+            const jobPostData = await metaDataProducer(tableHeaders, tableList)
         }
 
 
