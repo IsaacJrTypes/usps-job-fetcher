@@ -95,34 +95,32 @@ if (pagePromise) {
                 // }
             }
 
-            jobListing.forEach((val, i) => console.log(val, ": ", i));
+            //jobListing.forEach((val, i) => console.log(val, ": ", i));
+            
             // Clean data and structure it
             const tableHeaders = [...jobListing.slice(0, 4)];
-            const tableList = jobListing.slice(8, jobListing.length);
+            const tableList = jobListing.slice(8, jobListing.length).filter(val => val !== '100.00'); // Removes match value for data consistency across domain specific job post results
+            
             // console.log(tableHeaders)
-            console.log(tableList);
+            //console.log(tableList);
 
-            // Create job labels using index
-            const labelObj = () => {
-                const obj = {}
-                const labels = tableHeaders.forEach((val, i) => {
-                    const title = val;
-                    obj[i] = title;
-                });
-                return labels
-            };
             
 
             // console.log("Labels", JSON.stringify(labels));
 
 
             // Create list of structured job posting
-            const structureJobPosts = async (tableList) => {
+            const structureJobPosts = async (tableHeaders,tableList) => {
                 let linkIndex = 0; // linkListing contains all valid job link nodes
                 const structuredJobList = [];
-                for (let i = 0; i < tableList.length - 1; i+= 5) {
-                    const dataEntry = tableList[i];
-                    if (dataEntry === '') {
+                console.log('Table list: ', tableList)
+                for (let i = 0; i < tableList.length - 1; i+= 4) {
+                    const dataEntry = tableList;
+
+                    console.log('DataEntry: ', dataEntry)
+                    const stringEntry = dataEntry[i + 1]
+                    if (dataEntry[i] === '' && stringEntry.length !== 0) {
+                        console.log('Loop Entry: ',dataEntry)
                         // Get ordered data columns, then add to index
                         
                         // const extractLinkPageURL = async () => {
@@ -135,12 +133,12 @@ if (pagePromise) {
                         // }
                         //  await extractLinkPageURL()
                         //console.log('hRef: ', await extractLinkPageURL())
-
+                        
                         const structuredRow = {
-                            [[labelObj[0]]]: tableList[i + 1],
-                            [[labelObj[1]]]: tableList[i + 2],
-                            [[labelObj[2]]]: tableList[i + 3],
-                            [[labelObj[3]]]: tableList[i + 4],
+                            [tableHeaders[0]]: dataEntry[i + 1], // job
+                            [tableHeaders[1]]: dataEntry[i + 2], // type
+                            [tableHeaders[2]]: dataEntry[i + 3], // PostDate
+                           // [[labelObj[3]]]: jobEntries[i + 4] // Match
                         };
 
                         structuredJobList.push(structuredRow);
@@ -149,7 +147,7 @@ if (pagePromise) {
                 }
                 return structuredJobList;
             };
-            console.log('Structured posts: ',await structureJobPosts(tableList));
+        
         }
 
 
