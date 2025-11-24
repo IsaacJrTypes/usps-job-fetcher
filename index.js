@@ -121,7 +121,7 @@ if (pagePromise) {
                         console.log('DataEntry: ', dataEntry);
                         const stringEntry = dataEntry[i + 1];
                         if (dataEntry[i] === '' && stringEntry.length !== 0) {
-                            console.log('Loop Entry: ', dataEntry);
+                            //console.log('Loop Entry: ', dataEntry);
                             // Get ordered data columns, then add to index
 
                             // const extractLinkPageURL = async () => {
@@ -154,14 +154,16 @@ if (pagePromise) {
                 }
                 
             };
-            const metaDataProducer = async (tableHeaders, tableList) => {
+            const metaDataProducer = async (tableHeaders, tableList, structureJobPosts) => {
                 const data = await structureJobPosts(tableHeaders, tableList);
                 if(!data) {
                     return []
                 }
-                return table.list
+
+                return data
             } 
-            const jobPostData = await metaDataProducer(tableHeaders, tableList)
+            const jobPostData = await metaDataProducer(tableHeaders, tableList,structureJobPosts)
+            console.log(jobPostData)
         }
 
 
