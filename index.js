@@ -27,8 +27,8 @@ if (pagePromise) {
     console.log('Headers:', pagePromise.headers());
 
     // Get job by div id, select
-    const job = 'delivery-jobs';
-    //const job = 'it-jobs';
+    //const job = 'delivery-jobs';
+    const job = 'it-jobs';
     const jobTitleId = jobDivIds[job].jobTitleId;
     await page.waitForSelector(jobTitleId);
     await page.$(jobTitleId).then(el => el.click());
@@ -134,12 +134,21 @@ if (pagePromise) {
                             // }
                             //  await extractLinkPageURL()
                             //console.log('hRef: ', await extractLinkPageURL())
+                            const jobTitle = dataEntry[i + 1];
+                            const jobType = dataEntry[i + 2];
+                            const postDate = dataEntry[i + 3];
+                            let jobMetaData = jobTitle.split(' ');
+                            const jobId = jobMetaData.pop();
+                            const state = jobMetaData.pop();
+                            const city = jobMetaData.pop();
 
                             const structuredRow = {
-                                [tableHeaders[0]]: dataEntry[i + 1], // job
-                                [tableHeaders[1]]: dataEntry[i + 2], // type
-                                [tableHeaders[2]]: dataEntry[i + 3], // PostDate
-                                // [[labelObj[3]]]: jobEntries[i + 4] // Match
+                                [tableHeaders[0]]: jobTitle, // job
+                                [tableHeaders[1]]: jobType, // type
+                                [tableHeaders[2]]: postDate, // Post Date
+                                'jobId': jobId,
+                                'state': state,
+                                'city': city
                             };
 
                             structuredJobList.push(structuredRow);
@@ -157,13 +166,13 @@ if (pagePromise) {
             const metaDataProducer = async (tableHeaders, tableList, structureJobPosts) => {
                 const data = await structureJobPosts(tableHeaders, tableList);
                 if(!data) {
-                    return []
+                    return null
                 }
 
                 return data
             } 
             const jobPostData = await metaDataProducer(tableHeaders, tableList,structureJobPosts)
-            console.log(jobPostData)
+            console.log('JobPost MetaData: ',jobPostData)
         }
 
 
