@@ -3,6 +3,7 @@ import { jobPortalURL, jobDivIds } from './constants.js';
 import { JSDOM } from "jsdom";
 import path from 'path';
 import fs from 'fs';
+import { error } from 'console';
 
 const downloadPath = path.resolve('./jobPostPdf');
 
@@ -61,12 +62,12 @@ if (pagePromise) {
         const jobTableClass = '.urST3BdBrd.urST3Bd.urFontStd';
         await page.waitForSelector(jobTableClass);
         const table = await page.$(jobTableClass);
+        console.log('Table object: ',table)
 
         if (table) {
             console.log("Table exists!!");
             const tableHTML = await page.evaluate(el => el.outerHTML, table);
-            //console.log(tableHTML)
-            console.log(typeof tableHTML);
+  
             // Create dom tree for data extraction
             const dom = new JSDOM("");
             const DOMParser = dom.window.DOMParser;
@@ -76,51 +77,37 @@ if (pagePromise) {
 
             const rows = doc.querySelectorAll('tr');
 
-
             const jobListing = [];
-            const linkListings = [];
 
             // Get node data from rows dom
             for (let x = 0; x < rows.length; x++) {
                 const cells = rows[x].querySelectorAll('td');
-                // const linkNode = rows[x].querySelector('a') != null ? rows[x].querySelector('a') : false;
-
 
                 cells.forEach(cell => {
+                    console.log('Cell: ',cell)
                     jobListing.push(cell.textContent.trim());
                 });
-                // if (linkNode !== false) {
-                //console.log('found node: ',linkNode )
-                //     linkListings.push({ linkNode: linkNode });
-                // }
             }
-
-            //jobListing.forEach((val, i) => console.log(val, ": ", i));
+            console.log('Cells List: ', jobListing);
             
             // Clean data and structure it
             const tableHeaders = [...jobListing.slice(0, 4)];
             const tableList = jobListing.slice(8, jobListing.length).filter(val => val !== '100.00'); // Removes match value for data consistency across domain specific job post results
-            
-            // console.log(tableHeaders)
-            //console.log(tableList);
 
-            
-
-            // console.log("Labels", JSON.stringify(labels));
-
+            const errorMsg = jobListing[9]
+            if (errorMsg === 'The table does not contain any data') throw new Error('The table does not contain any data')
 
             // Create list of structured job posting
             const structureJobPosts = async (tableHeaders,tableList) => {
                 try {
-                    let linkIndex = 0; // linkListing contains all valid job link nodes
                     const structuredJobList = [];
                     console.log('Table list: ', tableList);
                     for (let i = 0; i < tableList.length - 1; i += 4) {
                         const dataEntry = tableList;
-
+                        
                         console.log('DataEntry: ', dataEntry);
                         const stringEntry = dataEntry[i + 1];
-                        if (dataEntry[i] === '' && stringEntry.length !== 0) {
+                        if (dataEntry[i] === '' && stringEntry.length !== 0 ) {
                             //console.log('Loop Entry: ', dataEntry);
                             // Get ordered data columns, then add to index
 
@@ -178,6 +165,9 @@ if (pagePromise) {
 
     } catch (err) {
         console.error('Issues parsing table html: ', err);
+        if (err instanceof Error && err.message === 'The table does not contain any data') {
+            console.error('No jobs available!! :(');
+        }
     }
     console.log('End of process');
 
