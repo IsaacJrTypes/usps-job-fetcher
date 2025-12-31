@@ -22,7 +22,7 @@ jobs:
           node-version: '18'
       
       - name: Install dependencies
-        run: npm install puppeteer jsdom
+        run: npm install puppeteer jsdom axios
       
       - name: Run scraper
         run: node index.js
