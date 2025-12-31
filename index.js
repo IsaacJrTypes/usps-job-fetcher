@@ -162,6 +162,7 @@ if (pagePromise) {
 
             const results = await jobPostData(tableHeaders, tableList, structureJobPosts)
             
+            // Send payload to n8n instance
             if (process.env.N8N_WEBHOOK_URL && results) {
                 try {
                     const response = await axios.post(process.env.N8N_WEBHOOK_URL, {
@@ -169,7 +170,7 @@ if (pagePromise) {
                         timestamp: new Date().toISOString(),
                         source: 'github-actions-usps-scraper'
                     });
-                    console.log('✓ Successfully sent to n8n:', response.status);
+                    console.log('Successfully sent to n8n:', response.status);
                 } catch (error) {
                     console.error('Failed to send to n8n:', error.message);
                 }
