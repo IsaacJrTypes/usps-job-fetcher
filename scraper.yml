@@ -1,0 +1,40 @@
+name: Run Scraper and Send to n8n
+
+on:
+  schedule:
+    - cron: '0 20 * * *'  # Run every day at 12 PM PST (8 PM UTC)
+  workflow_dispatch:      # Allow manual trigger from GitHub UI
+  push:
+    branches:
+      - main              # Run on push to main (optional)
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm install cheerio axios puppeteer
+      
+      - name: Run scraper
+        run: node scraper.js
+        env:
+          N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
+          SAP_USERNAME: ${{ secrets.SAP_USERNAME }}
+          SAP_PASSWORD: ${{ secrets.SAP_PASSWORD }}
+      
+      - name: Upload results (optional)
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: scraper-results
+          path: results.json
+          retention-days: 30
