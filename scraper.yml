@@ -29,10 +29,10 @@ jobs:
         env:
           N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
       
-      - name: Upload results (optional)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: scraper-results
-          path: results.json
-          retention-days: 30
+      # - name: Upload results (optional)
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: scraper-results
+      #     path: results.json
+      #     retention-days: 30
