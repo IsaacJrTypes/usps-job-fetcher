@@ -22,10 +22,10 @@ jobs:
           node-version: '18'
       
       - name: Install dependencies
-        run: npm install cheerio axios puppeteer
+        run: npm install axios puppeteer jsdom
       
       - name: Run scraper
-        run: node scraper.js
+        run: node index.js
         env:
           N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
       
