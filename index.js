@@ -164,11 +164,11 @@ if (pagePromise) {
             
             // Send payload to n8n instance
             const webhookURL = process.env.N8N_WEBHOOK_URL
-            if (typeof webhookURL !== 'string') throw new Error('No webhook URL found');
-            
-            if (process.env.N8N_WEBHOOK_URL && results) {
+            if (typeof webhookURL !== 'string') throw new Error('No webhook URL found')
+
+            if (webhookURL && results) {
                 try {
-                    const response = await axios.post(process.env.N8N_WEBHOOK_URL, {
+                    const response = await axios.post(webhookURL, {
                         jobs: results,
                         timestamp: new Date().toISOString(),
                         source: 'github-actions-usps-scraper'
