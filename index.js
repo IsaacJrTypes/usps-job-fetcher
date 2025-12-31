@@ -10,7 +10,7 @@ const downloadPath = path.resolve('./jobPostPdf');
 
 // Launch the browser and open a new blank page.
 const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     defaultViewport: null,
     args: ['--start-maximized']
 });
@@ -28,8 +28,8 @@ if (pagePromise) {
     console.log('Headers:', pagePromise.headers());
 
     // Get job by div id, select
-    //const job = 'delivery-jobs';
-    const job = 'it-jobs';
+    const job = 'delivery-jobs'; // For testing purposes
+    //const job = 'it-jobs';
     const jobTitleId = jobDivIds[job].jobTitleId;
     await page.waitForSelector(jobTitleId);
     await page.$(jobTitleId).then(el => el.click());
@@ -124,7 +124,7 @@ if (pagePromise) {
                             const jobTitle = dataEntry[i + 1];
                             const jobType = dataEntry[i + 2];
                             const postDate = dataEntry[i + 3];
-                            let jobMetaData = jobTitle.split(' ');
+                            const jobMetaData = jobTitle.split(' ');
                             const jobId = jobMetaData.pop();
                             const state = jobMetaData.pop();
                             const city = jobMetaData.pop();
@@ -168,6 +168,8 @@ if (pagePromise) {
         if (err instanceof Error && err.message === 'The table does not contain any data') {
             console.error('No jobs available!! :(');
         }
+    } finally { // Kill browser
+        await browser.close();
     }
     console.log('End of process');
 
