@@ -23,6 +23,11 @@ jobs:
       
       - name: Install dependencies
         run: npm install ci
+
+      - name: Debug environment
+        run: |
+          echo "Webhook URL set: ${{ secrets.N8N_WEBHOOK_URL != '' }}"
+          echo "Webhook URL: ${N8N_WEBHOOK_URL:0:20}..."
       
       - name: Run scraper
         run: node index.js
