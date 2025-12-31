@@ -62,10 +62,10 @@ if (pagePromise) {
         const jobTableClass = '.urST3BdBrd.urST3Bd.urFontStd';
         await page.waitForSelector(jobTableClass);
         const table = await page.$(jobTableClass);
-        console.log('Table object: ',table)
+        //console.log('Table object: ',table)
 
         if (table) {
-            console.log("Table exists!!");
+            //console.log("Table exists!!");
             const tableHTML = await page.evaluate(el => el.outerHTML, table);
   
             // Create dom tree for data extraction
@@ -139,7 +139,7 @@ if (pagePromise) {
                             };
 
                             structuredJobList.push(structuredRow);
-                            console.log(structuredJobList);
+                            //console.log(structuredJobList);
                         }
                     }
                     return structuredJobList;
@@ -155,13 +155,13 @@ if (pagePromise) {
                 if(!data) {
                     return null
                 }
-
                 return data
             } 
-            const jobPostData = await metaDataProducer(tableHeaders, tableList,structureJobPosts)
-            console.log('JobPost MetaData: ',jobPostData)
-        }
+            const jobPostData = async (tableHeaders, tableList, structureJobPosts) => await metaDataProducer(tableHeaders, tableList,structureJobPosts)
 
+            console.log(await jobPostData(tableHeaders, tableList, structureJobPosts));
+            
+        }
 
     } catch (err) {
         console.error('Issues parsing table html: ', err);
