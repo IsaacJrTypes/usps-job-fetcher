@@ -148,8 +148,6 @@ if (pagePromise) {
                     return structuredJobList;
                 } catch(e) {
                     console.error('Structure job post algorithm error: ',e)
-                } finally { // Kill browser
-                    await browser.close();
                 }
                 
             };
