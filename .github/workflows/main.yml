@@ -27,7 +27,7 @@ jobs:
       - name: Debug environment
         run: |
           echo "Webhook URL set: ${{ vars.N8N_WEBHOOK_URL != '' }}"
-          echo "Webhook URL: ${N8N_WEBHOOK_URL:0:20}..."
+          echo "Webhook URL: ${{ vars.N8N_WEBHOOK_URL != '' }}"
       
       - name: Run scraper
         run: node index.js
