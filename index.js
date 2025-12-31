@@ -3,12 +3,14 @@ import { jobPortalURL, jobDivIds } from './constants.js';
 import { JSDOM } from "jsdom";
 import path from 'path';
 import axios from 'axios';
+import dotenv from 'dotenv';
 import fs from 'fs';
 import { error } from 'console';
 
 const downloadPath = path.resolve('./jobPostPdf');
 
 
+dotenv.config();
 // Launch the browser and open a new blank page.
 const browser = await puppeteer.launch({
     headless: true,
