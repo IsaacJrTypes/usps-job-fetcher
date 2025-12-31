@@ -181,7 +181,7 @@ if (pagePromise) {
                 }
             }
 
-            console.log(results);
+            //console.log(results);
             
         }
 
