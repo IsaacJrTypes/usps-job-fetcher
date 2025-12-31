@@ -22,17 +22,17 @@ jobs:
           node-version: '18'
       
       - name: Install dependencies
-        run: npm install ci
+        run: npm run ci
 
       - name: Debug environment
         run: |
-          echo "Webhook URL set: ${{ secrets.N8N_WEBHOOK_URL != '' }}"
+          echo "Webhook URL set: ${{ vars.N8N_WEBHOOK_URL != '' }}"
           echo "Webhook URL: ${N8N_WEBHOOK_URL:0:20}..."
       
       - name: Run scraper
         run: node index.js
         env:
-          N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
+          N8N_WEBHOOK_URL: ${{ vars.N8N_WEBHOOK_URL }}
           
       # - name: Upload results (optional)
       #   if: always()
