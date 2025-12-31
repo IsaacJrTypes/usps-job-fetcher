@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer';
 import { jobPortalURL, jobDivIds } from './constants.js';
 import { JSDOM } from "jsdom";
 import path from 'path';
+import axios from 'axios';
 import fs from 'fs';
 import { error } from 'console';
 
@@ -84,11 +85,11 @@ if (pagePromise) {
                 const cells = rows[x].querySelectorAll('td');
 
                 cells.forEach(cell => {
-                    console.log('Cell: ',cell)
+                    //console.log('Cell: ',cell)
                     jobListing.push(cell.textContent.trim());
                 });
             }
-            console.log('Cells List: ', jobListing);
+            //console.log('Cells List: ', jobListing);
             
             // Clean data and structure it
             const tableHeaders = [...jobListing.slice(0, 4)];
@@ -101,11 +102,11 @@ if (pagePromise) {
             const structureJobPosts = async (tableHeaders,tableList) => {
                 try {
                     const structuredJobList = [];
-                    console.log('Table list: ', tableList);
+                    //console.log('Table list: ', tableList);
                     for (let i = 0; i < tableList.length - 1; i += 4) {
                         const dataEntry = tableList;
                         
-                        console.log('DataEntry: ', dataEntry);
+                        //console.log('DataEntry: ', dataEntry);
                         const stringEntry = dataEntry[i + 1];
                         if (dataEntry[i] === '' && stringEntry.length !== 0 ) {
                             //console.log('Loop Entry: ', dataEntry);
@@ -159,7 +160,22 @@ if (pagePromise) {
             } 
             const jobPostData = async (tableHeaders, tableList, structureJobPosts) => await metaDataProducer(tableHeaders, tableList,structureJobPosts)
 
-            console.log(await jobPostData(tableHeaders, tableList, structureJobPosts));
+            const results = await jobPostData(tableHeaders, tableList, structureJobPosts)
+            
+            if (process.env.N8N_WEBHOOK_URL && results) {
+                try {
+                    const response = await axios.post(process.env.N8N_WEBHOOK_URL, {
+                        jobs: results,
+                        timestamp: new Date().toISOString(),
+                        source: 'github-actions-usps-scraper'
+                    });
+                    console.log('✓ Successfully sent to n8n:', response.status);
+                } catch (error) {
+                    console.error('Failed to send to n8n:', error.message);
+                }
+            }
+
+            console.log(results);
             
         }
 
