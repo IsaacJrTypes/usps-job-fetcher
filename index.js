@@ -163,6 +163,9 @@ if (pagePromise) {
             const results = await jobPostData(tableHeaders, tableList, structureJobPosts)
             
             // Send payload to n8n instance
+            const webhookURL = process.env.N8N_WEBHOOK_URL
+            if (typeof webhookURL !== 'string') throw new Error('No webhook URL found');
+            
             if (process.env.N8N_WEBHOOK_URL && results) {
                 try {
                     const response = await axios.post(process.env.N8N_WEBHOOK_URL, {
