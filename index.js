@@ -10,7 +10,7 @@ import { error } from 'console';
 const downloadPath = path.resolve('./jobPostPdf');
 
 
-dotenv.config();
+//dotenv.config();
 // Launch the browser and open a new blank page.
 const browser = await puppeteer.launch({
     headless: true,
