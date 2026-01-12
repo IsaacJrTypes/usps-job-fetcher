@@ -31,8 +31,8 @@ if (pagePromise) {
     console.log('Headers:', pagePromise.headers());
 
     // Get job by div id, select
-    const job = 'delivery-jobs'; // For testing purposes
-    //const job = 'it-jobs';
+    //const job = 'delivery-jobs'; // For testing purposes
+    const job = 'it-jobs';
     const jobTitleId = jobDivIds[job].jobTitleId;
     await page.waitForSelector(jobTitleId);
     await page.$(jobTitleId).then(el => el.click());
@@ -161,11 +161,12 @@ if (pagePromise) {
             const jobPostData = async (tableHeaders, tableList, structureJobPosts) => await metaDataProducer(tableHeaders, tableList,structureJobPosts)
 
             const results = await jobPostData(tableHeaders, tableList, structureJobPosts)
+            console.log('Results: ',results);
             
             // Send payload to n8n instance
             const webhookURL = process.env.N8N_WEBHOOK_URL
             if (typeof webhookURL !== 'string') throw new Error('No webhook URL found')
-
+            
             if (webhookURL && results) {
                 try {
                     const response = await axios.post(webhookURL, {
@@ -178,8 +179,6 @@ if (pagePromise) {
                     console.error('Failed to send to n8n:', error.message);
                 }
             }
-
-            //console.log(results);
             
         }
 
