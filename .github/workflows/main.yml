@@ -11,7 +11,7 @@ on:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    environment: N8N_WEBHOOK_URL
+    environment: N8N_CONFIG
     
     steps:
       - name: Checkout code
@@ -22,13 +22,13 @@ jobs:
         with:
           node-version: '18'
       
-      - name: Install dependencies
+      - name: Install dependencies from package.json
         run: npm install ci
 
       - name: Debug environment
         run: |
           echo "Webhook URL set: ${{ vars.N8N_WEBHOOK_URL != '' }}"
-          echo "Webhook URL: ${{ vars.N8N_WEBHOOK_URL != '' }}"
+          echo "Webhook URL: ${{ vars.N8N_WEBHOOK_URL }}"
       
       - name: Run scraper
         run: node index.js
