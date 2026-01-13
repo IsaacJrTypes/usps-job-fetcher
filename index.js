@@ -124,10 +124,11 @@ if (pagePromise) {
                             // }
                             //  await extractLinkPageURL()
                             //console.log('hRef: ', await extractLinkPageURL())
-                            const jobTitle = dataEntry[i + 1];
+                            const jobTitle = dataEntry[i + 1].replaceAll(' EXT',''); // Removes internship tag
                             const jobType = dataEntry[i + 2];
                             const postDate = dataEntry[i + 3];
                             const jobMetaData = jobTitle.split(' ');
+                            
                             const jobId = jobMetaData.pop();
                             const state = jobMetaData.pop();
                             const city = jobMetaData.pop();
